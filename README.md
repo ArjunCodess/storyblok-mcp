@@ -1,6 +1,6 @@
 # Storyblok MCP Server
 
-A smart AI bridge between Model Context Protocol (MCP) and Storyblok - the most flexible headless CMS out there.
+Connect AI tools to Storyblok instantly - use natural language to manage your CMS like magic.
 
 <!-- ---
 
@@ -20,15 +20,6 @@ A smart AI bridge between Model Context Protocol (MCP) and Storyblok - the most 
 - [🛠️ How to Set Up (For Contributors)](#🛠️-how-to-set-up-for-contributors)
 - [⚡ How to Use (For Users)](#⚡-how-to-use-for-users)
 - [🛠️ Tools](#🛠️-tools)
-  - [1. Story Management](#1-story-management)
-  - [2. Tag Management](#2-tag-management)
-  - [3. Release Management](#3-release-management)
-  - [4. Asset Management](#4-asset-management)
-  - [5. Asset Folder Management](#5-asset-folder-management)
-  - [6. Component Management](#6-component-management)
-  - [7. Advanced Story Search](#7-advanced-story-search)
-  - [8. Space & Folder Info](#8-space--folder-info)
-  - [9. Utility](#9-utility)
 - [💡 How to Contribute](#💡-how-to-contribute)
 - [📚 Useful Links](#📚-useful-links)
 - [🏆 Thanks](#🏆-thanks)
@@ -116,7 +107,7 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 ### Connect with Cursor
 
 - Open Cursor in the same directory.
-- Right click on build/index.js file and click **Copy Path**.
+- Right click on `build/index.js` file and click **Copy Path**.
 - Now, go to **Settings** → **MCP Tools**.
 - Click on **New MCP Server**
 - Inside the opened `mcp.json` file. Paste this and replace PATH_YOU_COPIED with the path copied in the second step:
@@ -139,7 +130,8 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 ## 🛠️ Tools
 
-### 1. Story Management
+<details>
+<summary>1. Story Management</summary>
 
 - **fetch_stories**  
   Retrieve a list of stories (pages, folders, or content entries) from Storyblok. Supports filtering, pagination, and search.
@@ -151,7 +143,7 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
   Create a new story (page, folder, or content entry) in Storyblok.
 
 - **update_story**  
-  Update an existing story’s content, name, slug, or tags.
+  Update an existing story's content, name, slug, or tags.
 
 - **delete_story**  
   Delete a story by its ID.
@@ -167,10 +159,10 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 - **restore_story**  
   Restore a story to a previous version.
+</details>
 
----
-
-### 2. Tag Management
+<details>
+<summary>2. Tag Management</summary>
 
 - **fetch_tags**  
   List all tags used in the space.
@@ -183,10 +175,10 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 - **delete_tag**  
   Delete a tag by its ID.
+</details>
 
----
-
-### 3. Release Management
+<details>
+<summary>3. Release Management</summary>
 
 - **fetch_releases**  
   List all releases (content batches for scheduled publishing).
@@ -202,10 +194,10 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 - **delete_release**  
   Delete a release.
+</details>
 
----
-
-### 4. Asset Management
+<details>
+<summary>4. Asset Management</summary>
 
 - **fetch_assets**  
   List all assets (images, files, etc.) in the space.
@@ -221,10 +213,10 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 - **complete_asset_upload**  
   Complete the asset upload process.
+</details>
 
----
-
-### 5. Asset Folder Management
+<details>
+<summary>5. Asset Folder Management</summary>
 
 - **fetch_asset_folders**  
   List all asset folders.
@@ -237,10 +229,10 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 - **delete_asset_folder**  
   Delete an asset folder.
+</details>
 
----
-
-### 6. Component Management
+<details>
+<summary>6. Component Management</summary>
 
 - **fetch_components**  
   List all components (content types) in the space.
@@ -252,24 +244,24 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
   Create a new component.
 
 - **update_component**  
-  Update a component’s schema or settings.
+  Update a component's schema or settings.
 
 - **delete_component**  
   Delete a component.
+</details>
 
----
-
-### 7. Advanced Story Search
+<details>
+<summary>7. Advanced Story Search</summary>
 
 - **search_stories**  
   Search for stories using advanced filters (by slug, tag, etc.).
 
 - **get_story_by_slug**  
   Fetch a story by its slug.
+</details>
 
----
-
-### 8. Space & Folder Info
+<details>
+<summary>8. Space & Folder Info</summary>
 
 - **get_space**  
   Get information about the current Storyblok space.
@@ -279,13 +271,14 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 - **fetch_datasources**  
   List all datasources (for dynamic select fields, etc.).
+</details>
 
----
-
-### 9. Utility
+<details>
+<summary>9. Utility</summary>
 
 - **ping**  
   Check if the server and Storyblok API are reachable.
+</details>
 
 ---
 
