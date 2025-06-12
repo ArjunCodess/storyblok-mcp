@@ -4,30 +4,30 @@ Connect AI tools to Storyblok instantly - use natural language to manage your CM
 
 <!-- ---
 
-## 🚀 Demo
+## Demo
 
 [![Watch the demo](https://img.youtube.com/vi/YOUR_DEMO_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUR_DEMO_VIDEO_ID_HERE) -->
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 
-<!-- - [🚀 Demo](#🚀-demo) -->
-- [✨ Why This Project?](#✨-why-this-project)
-- [🧩 What is Storyblok?](#🧩-what-is-storyblok)
-- [🤖 What's an MCP Server?](#🤖-whats-an-mcp-server)
-- [🏗️ Challenges I Faced](#🏗️-challenges-i-faced)
-- [🛠️ How to Set Up (For Contributors)](#🛠️-how-to-set-up-for-contributors)
-- [⚡ How to Use (For Users)](#⚡-how-to-use-for-users)
-- [🛠️ Tools](#🛠️-tools)
-- [💡 How to Contribute](#💡-how-to-contribute)
-- [📚 Useful Links](#📚-useful-links)
-- [🏆 Thanks](#🏆-thanks)
-- [📄 License](#📄-license)
+<!-- - [Demo](#demo) -->
+- [Why This Project?](#why-this-project)
+- [What is Storyblok?](#what-is-storyblok)
+- [What's an MCP Server?](#whats-an-mcp-server)
+- [Challenges I Faced](#challenges-i-faced)
+- [How to Set Up (For Contributors)](#how-to-set-up-for-contributors)
+- [How to Use (For Users)](#how-to-use-for-users)
+- [Tools](#tools)
+- [How to Contribute](#how-to-contribute)
+- [Useful Links](#useful-links)
+- [Thanks](#thanks)
+- [License](#license)
 
 ---
 
-## ✨ Why This Project?
+## Why This Project?
 
 Built for the [Storyblok Headless CMS Challenge](https://dev.to/challenges/storyblok) on DEV.to.
 
@@ -35,7 +35,7 @@ The goal: push AI and Storyblok's power together, make something fresh and usefu
 
 ---
 
-## 🧩 What is Storyblok?
+## What is Storyblok?
 
 Storyblok is a powerful headless CMS. API-first. Easy for devs and content creators to work together.
 
@@ -43,7 +43,7 @@ It's modular, super flexible, and fits with any frontend or workflow you want.
 
 ---
 
-## 🤖 What's an MCP Server?
+## What's an MCP Server?
 
 MCP = a protocol that connects AI, tools, and data.
 
@@ -53,7 +53,7 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 ---
 
-## 🏗️ Challenges I Faced
+## Challenges I Faced
 
 * **Built for myself (lol):**
   Never made or installed an MCP before. Took way longer than I thought.
@@ -72,7 +72,7 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 ---
 
-## 🛠️ How to Set Up (For Contributors)
+## How to Set Up (For Contributors)
 
 1. Clone the repo:
 
@@ -95,7 +95,7 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 ---
 
-## ⚡ How to Use (For Users)
+## How to Use (For Users)
 
 ### Clone the repo:
 
@@ -128,7 +128,7 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 ---
 
-## 🛠️ Tools
+## Tools
 
 <details>
 <summary>1. Story Management</summary>
@@ -282,14 +282,14 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
 
 ---
 
-## 💡 How to Contribute
+## How to Contribute
 
 Fork, make changes, open PRs.
 Found bugs or want features? Open an issue.
 
 ---
 
-## 📚 Useful Links
+## Useful Links
 
 * [Storyblok Docs](https://www.storyblok.com/docs)
 * [MCP Protocol](https://github.com/modelcontextprotocol)
@@ -298,12 +298,12 @@ Found bugs or want features? Open an issue.
 
 ---
 
-## 🏆 Thanks
+## Thanks
 
 Made with ❤️ for the [DEV.to Storyblok Challenge](https://dev.to/challenges/storyblok).
 
 ---
 
-## 📄 License
+## License
 
 MIT
