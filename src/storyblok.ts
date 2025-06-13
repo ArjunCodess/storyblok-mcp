@@ -2,6 +2,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import axios from "axios";
 import { CDN_BASE, MANAGEMENT_BASE, MANAGEMENT_TOKEN, PUBLIC_TOKEN, buildURL, getHeaders, toQuery } from "./utils.js";
+import { generateText, generateObject } from 'ai';
+import { google } from '@ai-sdk/google';
 
 export function storyblok(server: McpServer) {
   server.tool('ping', {}, async () => {
@@ -407,6 +409,108 @@ export function storyblok(server: McpServer) {
       const q = toQuery({ page, per_page });
       const res = await axios.get(buildURL(MANAGEMENT_BASE, `datasources${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
       return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('generate_alt', {
+    asset_id: z.string()
+  }, async ({ asset_id }) => {
+    try {
+      const assetRes = await axios.get(buildURL(MANAGEMENT_BASE, `assets/${asset_id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      const asset = assetRes.data;
+      if (!asset || !asset.filename) {
+        return { isError: true, content: [{ type: 'text', text: 'Asset not found or missing filename.' }] };
+      }
+      const imageRes = await axios.get(asset.filename, { responseType: 'arraybuffer' });
+      const imageBuffer = Buffer.from(imageRes.data);
+      const { text: alt } = await generateText({
+        model: google('gemini-2.0-flash'),
+        messages: [
+          {
+            role: 'user',
+            content: [
+              { type: 'text', text: 'Describe this image for visually impaired users. Be concise and accurate.' },
+              { type: 'image', image: imageBuffer, mimeType: imageRes.headers['content-type'] || 'image/jpeg' }
+            ]
+          }
+        ]
+      });
+      await axios.put(buildURL(MANAGEMENT_BASE, `assets/${asset_id}`), { meta_data: { alt } }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify({ asset: { id: asset_id, alt } }) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('generate_meta', {
+    story_id: z.string()
+  }, async ({ story_id }) => {
+    try {
+      const q = toQuery({ token: PUBLIC_TOKEN });
+      const storyRes = await axios.get(`${CDN_BASE}/stories/${story_id}${q}`);
+      const story = storyRes.data.story;
+      if (!story || !story.content) {
+        return { isError: true, content: [{ type: 'text', text: 'Story not found.' }] };
+      }
+      const text = JSON.stringify(story.content);
+      const prompt = `Write an SEO title (max 60 chars) and meta description (max 155 chars) for this content.\nContent: ${text}\nReturn as JSON: {\"meta_title\": string, \"meta_description\": string}`;
+      const { object } = await generateObject({
+        model: google('gemini-2.0-flash'),
+        schema: z.object({ meta_title: z.string(), meta_description: z.string() }),
+        prompt
+      });
+      await axios.put(buildURL(MANAGEMENT_BASE, `stories/${story_id}`), { story: { content: { ...story.content, meta_title: object.meta_title, meta_description: object.meta_description } } }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify({ meta_title: object.meta_title, meta_description: object.meta_description }) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('auto_tag_story', {
+    story_id: z.string()
+  }, async ({ story_id }) => {
+    try {
+      const q = toQuery({ token: PUBLIC_TOKEN });
+      const storyRes = await axios.get(`${CDN_BASE}/stories/${story_id}${q}`);
+      const story = storyRes.data.story;
+      if (!story || !story.content) {
+        return { isError: true, content: [{ type: 'text', text: 'Story not found.' }] };
+      }
+      const text = JSON.stringify(story.content);
+      const prompt = `List 8 keywords summarizing this article. Return as a JSON array of strings.`;
+      const { object } = await generateObject({
+        model: google('gemini-2.0-flash'),
+        schema: z.array(z.string()),
+        prompt: `${prompt}\nContent: ${text}`
+      });
+      const tags: string[] = object;
+      const tagsRes = await axios.get(buildURL(MANAGEMENT_BASE, 'tags'), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      const existingTags = (tagsRes.data?.tags || []).map((t: any) => t.name);
+      for (const tag of tags) {
+        if (!existingTags.includes(tag)) {
+          await axios.post(buildURL(MANAGEMENT_BASE, 'tags'), { name: tag }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+        }
+      }
+      await axios.put(buildURL(MANAGEMENT_BASE, `stories/${story_id}`), { story: { tag_list: tags } }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify({ tags }) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('translate_story', {
+    story_id: z.string(),
+    lang: z.string()
+  }, async ({ story_id, lang }) => {
+    try {
+      const res = await axios.put(
+        buildURL(MANAGEMENT_BASE, `stories/${story_id}/ai_translate`), 
+        { lang, code: lang, overwrite: false }, 
+        { headers: getHeaders(MANAGEMENT_TOKEN) }
+      );
+      return { content: [{ type: 'text', text: JSON.stringify(res.data) }] };
     } catch (error: any) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
     }

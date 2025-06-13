@@ -9,7 +9,9 @@
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.2.19",
     "@modelcontextprotocol/sdk": "^1.11.5",
+    "ai": "^4.3.16",
     "axios": "^1.6.7",
     "zod": "^3.22.4"
   },
