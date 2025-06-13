@@ -119,7 +119,8 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
         "env": {
           "STORYBLOK_SPACE_ID": "your_space_id",
           "STORYBLOK_MANAGEMENT_TOKEN": "your_management_token",
-          "STORYBLOK_DEFAULT_PUBLIC_TOKEN": "your_public_token"
+          "STORYBLOK_DEFAULT_PUBLIC_TOKEN": "your_public_token",
+          "GOOGLE_GENERATIVE_AI_API_KEY": "your_gemini_ai_api_key"
         }
       }
     }
