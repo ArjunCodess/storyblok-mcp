@@ -280,6 +280,25 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
   Check if the server and Storyblok API are reachable.
 </details>
 
+<details>
+<summary>10. AI Tools</summary>
+
+* **generate_alt_text**  
+  Automatically create alt text for images based on content or context.
+
+* **translate_story**  
+  Translate the content of a story into different languages using AI.
+
+* **generate_meta_tags**  
+  Generate SEO-friendly meta titles and descriptions for any story.
+
+* **summarize_story**  
+  Get a brief AI-generated summary of a story’s content.
+
+* **tag_story_with_ai**  
+  Auto-generate relevant tags for a story using natural language processing.
+</details>
+
 ---
 
 ## How to Contribute
