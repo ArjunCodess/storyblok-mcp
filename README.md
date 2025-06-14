@@ -2,17 +2,26 @@
 
 Connect AI tools to Storyblok instantly - use natural language to manage your CMS like magic.
 
-<!-- ---
-
 ## Demo
 
-[![Watch the demo](https://img.youtube.com/vi/YOUR_DEMO_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUR_DEMO_VIDEO_ID_HERE) -->
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/e3f3ae2b-2774-406d-a952-8994b9618202" alt="Demo Image 1" width="300" /></td>
+    <td><img src="https://github.com/user-attachments/assets/3d6b6a34-70eb-4c57-99b7-c81d091f47ff" alt="Demo Image 2" width="300" /></td>
+    <td><img src="https://github.com/user-attachments/assets/960ff18e-537a-4a82-89bc-0f5b0e56f68f" alt="Demo Image 3" width="300" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/cae92c66-43c7-4b64-a08d-d868f50566b5" alt="Demo Image 4" width="300" /></td>
+    <td><img src="https://github.com/user-attachments/assets/2ecffada-e5ea-4008-8070-c579e0d28b10" alt="Demo Image 5" width="300" /></td>
+    <td><img src="https://github.com/user-attachments/assets/e49d6c52-a805-4044-91dc-e1ed6d19df68" alt="Demo Image 6" width="300" /></td>
+  </tr>
+</table>
 
 ---
 
 ## Table of Contents
 
-<!-- - [Demo](#demo) -->
+- [Demo](#demo)
 - [Why This Project?](#why-this-project)
 - [What is Storyblok?](#what-is-storyblok)
 - [What's an MCP Server?](#whats-an-mcp-server)
@@ -47,9 +56,9 @@ It's modular, super flexible, and fits with any frontend or workflow you want.
 
 MCP = a protocol that connects AI, tools, and data.
 
-The MCP server is the middleman - it shows AI what it can do and what data it has.
+The MCP server acts as a middleman, showing AI what it can do and what data it has.
 
-This lets AI clients like Cursor or Claude Desktop talk to Storyblok through natural language and manage content smoothly.
+This enables AI clients, such as Cursor or Claude Desktop, to interact with Storyblok through natural language and manage content smoothly.
 
 ---
 
@@ -105,6 +114,8 @@ This lets AI clients like Cursor or Claude Desktop talk to Storyblok through nat
    ```
 
 ### Connect with Cursor
+
+https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 
 - Open Cursor in the same directory.
 - Right click on `build/index.js` file and click **Copy Path**.
