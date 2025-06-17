@@ -8,10 +8,12 @@ Connect AI tools to Storyblok instantly - use natural language to manage your CM
   <tr>
     <td><img src="https://github.com/user-attachments/assets/e3f3ae2b-2774-406d-a952-8994b9618202" alt="Demo Image 1" width="300" /></td>
     <td><img src="https://github.com/user-attachments/assets/3d6b6a34-70eb-4c57-99b7-c81d091f47ff" alt="Demo Image 2" width="300" /></td>
-    <td><img src="https://github.com/user-attachments/assets/960ff18e-537a-4a82-89bc-0f5b0e56f68f" alt="Demo Image 3" width="300" /></td>
   </tr>
   <tr>
+    <td><img src="https://github.com/user-attachments/assets/960ff18e-537a-4a82-89bc-0f5b0e56f68f" alt="Demo Image 3" width="300" /></td>
     <td><img src="https://github.com/user-attachments/assets/cae92c66-43c7-4b64-a08d-d868f50566b5" alt="Demo Image 4" width="300" /></td>
+  </tr>
+  <tr>
     <td><img src="https://github.com/user-attachments/assets/2ecffada-e5ea-4008-8070-c579e0d28b10" alt="Demo Image 5" width="300" /></td>
     <td><img src="https://github.com/user-attachments/assets/e49d6c52-a805-4044-91dc-e1ed6d19df68" alt="Demo Image 6" width="300" /></td>
   </tr>
