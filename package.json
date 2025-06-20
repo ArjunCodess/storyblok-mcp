@@ -19,5 +19,20 @@
     "@types/node": "^20.11.24",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"
+  },
+  "main": "build/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArjunCodess/storyblok-mcp.git"
+  },
+  "keywords": ["mcp", "storyblok", "mcp-server", "mcp-server-storyblok", "server", "storyblok-mcp", "storyblok-mcp-server"],
+  "author": "Arjun Vijay Prakash (https://github.com/ArjunCodess)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArjunCodess/storyblok-mcp/issues"
+  },
+  "homepage": "https://github.com/ArjunCodess/storyblok-mcp#readme",
+  "bin": {
+    "storyblok-mcp": "build/index.js"
   }
 }
