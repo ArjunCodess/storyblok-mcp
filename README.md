@@ -211,7 +211,26 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>4. Access Management</summary>
+<summary>4. Story Scheduling</summary>
+
+- **fetch_story_schedulings**  
+  Retrieve a list of story scheduling objects (scheduled publishings) for stories. Supports filtering, pagination, and search.
+
+- **get_story_scheduling**  
+  Fetch a single story scheduling object by its ID.
+
+- **create_story_scheduling**  
+  Schedule a story to be published at a specific date and time.
+
+- **update_story_scheduling**  
+  Update an existing story scheduling (e.g., change publish time or language).
+
+- **delete_story_scheduling**  
+  Delete a story scheduling by its ID.
+</details>
+
+<details>
+<summary>5. Access Management</summary>
 
 - **fetch_access_tokens**  
   Retrieve all access tokens (API keys) for the current space.
@@ -230,7 +249,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>5. Asset Management</summary>
+<summary>6. Asset Management</summary>
 
 - **fetch_assets**  
   List all assets (images, files, etc.) in the space.
@@ -249,7 +268,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>6. Asset Folder Management</summary>
+<summary>7. Asset Folder Management</summary>
 
 - **fetch_asset_folders**  
   List all asset folders.
@@ -265,7 +284,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>7. Component Management</summary>
+<summary>8. Component Management</summary>
 
 - **fetch_components**  
   List all components (content types) in the space.
@@ -284,7 +303,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>8. Advanced Story Search</summary>
+<summary>9. Advanced Story Search</summary>
 
 - **search_stories**  
   Search for stories using advanced filters (by slug, tag, etc.).
@@ -294,7 +313,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>9. Space & Folder Info</summary>
+<summary>10. Space & Folder Info</summary>
 
 - **get_space**  
   Get information about the current Storyblok space.
@@ -307,14 +326,14 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>10. Utility</summary>
+<summary>11. Utility</summary>
 
 - **ping**  
   Check if the server and Storyblok API are reachable.
 </details>
 
 <details>
-<summary>11. AI Tools</summary>
+<summary>12. AI Tools</summary>
 
 * **generate_alt_text**  
   Automatically create alt text for images based on content or context.

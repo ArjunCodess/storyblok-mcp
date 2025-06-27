@@ -584,4 +584,64 @@ export function storyblok(server: McpServer) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
     }
   });
+
+  server.tool('fetch_story_schedulings', {
+    page: z.number().optional(),
+    per_page: z.number().optional(),
+    story_id: z.number().optional(),
+    language: z.string().optional(),
+    sort_by: z.string().optional()
+  }, async (params) => {
+    try {
+      const q = toQuery(params);
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, `story_schedulings${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('get_story_scheduling', { id: z.string() }, async ({ id }) => {
+    try {
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, `story_schedulings/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('create_story_scheduling', {
+    story_id: z.number(),
+    publish_at: z.string(),
+    language: z.string().optional()
+  }, async (params) => {
+    try {
+      const res = await axios.post(buildURL(MANAGEMENT_BASE, 'story_schedulings'), { story_scheduling: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('update_story_scheduling', {
+    id: z.string(),
+    publish_at: z.string().optional(),
+    language: z.string().optional()
+  }, async ({ id, ...params }) => {
+    try {
+      const res = await axios.put(buildURL(MANAGEMENT_BASE, `story_schedulings/${id}`), { story_scheduling: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('delete_story_scheduling', { id: z.string() }, async ({ id }) => {
+    try {
+      await axios.delete(buildURL(MANAGEMENT_BASE, `story_schedulings/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: `Story scheduling ${id} has been successfully deleted.` }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
 }
