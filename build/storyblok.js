@@ -708,4 +708,70 @@ export function storyblok(server) {
             return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
         }
     });
+    server.tool('fetch_presets', {
+        page: z.number().optional(),
+        per_page: z.number().optional()
+    }, async ({ page = 1, per_page = 25 }) => {
+        try {
+            const q = toQuery({ page, per_page });
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `presets${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('get_preset', { id: z.string() }, async ({ id }) => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `presets/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('create_preset', {
+        name: z.string(),
+        preset: z.record(z.unknown()),
+        component_id: z.number(),
+        image: z.string().optional(),
+        color: z.string().optional(),
+        icon: z.string().optional(),
+        description: z.string().optional()
+    }, async (params) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, 'presets'), { preset: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('update_preset', {
+        id: z.string(),
+        name: z.string().optional(),
+        preset: z.record(z.unknown()).optional(),
+        component_id: z.number().optional(),
+        image: z.string().optional(),
+        color: z.string().optional(),
+        icon: z.string().optional(),
+        description: z.string().optional()
+    }, async ({ id, ...params }) => {
+        try {
+            const res = await axios.put(buildURL(MANAGEMENT_BASE, `presets/${id}`), { preset: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('delete_preset', { id: z.string() }, async ({ id }) => {
+        try {
+            await axios.delete(buildURL(MANAGEMENT_BASE, `presets/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: `Preset ${id} has been successfully deleted.` }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
 }

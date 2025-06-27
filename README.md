@@ -214,7 +214,26 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>4. Story Scheduling</summary>
+<summary>4. Presets Management</summary>
+
+- **fetch_presets**  
+  List all component presets in the space. Supports pagination.
+
+- **get_preset**  
+  Fetch a single preset by its ID.
+
+- **create_preset**  
+  Create a new preset with default values for a component.
+
+- **update_preset**  
+  Update an existing preset's content, name, or appearance settings.
+
+- **delete_preset**  
+  Delete a preset by its ID.
+</details>
+
+<details>
+<summary>5. Story Scheduling</summary>
 
 - **fetch_story_schedulings**  
   Retrieve a list of story scheduling objects (scheduled publishings) for stories. Supports filtering, pagination, and search.
@@ -233,7 +252,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>5. Access Management</summary>
+<summary>6. Access Management</summary>
 
 - **fetch_access_tokens**  
   Retrieve all access tokens (API keys) for the current space.
@@ -252,7 +271,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>6. Asset Management</summary>
+<summary>7. Asset Management</summary>
 
 - **fetch_assets**  
   List all assets (images, files, etc.) in the space.
@@ -271,7 +290,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>7. Asset Folder Management</summary>
+<summary>8. Asset Folder Management</summary>
 
 - **fetch_asset_folders**  
   List all asset folders.
@@ -287,7 +306,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>8. Component Management</summary>
+<summary>9. Component Management</summary>
 
 - **fetch_components**  
   List all components (content types) in the space.
@@ -306,7 +325,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>9. Advanced Story Search</summary>
+<summary>10. Advanced Story Search</summary>
 
 - **search_stories**  
   Search for stories using advanced filters (by slug, tag, etc.).
@@ -316,7 +335,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>10. Space & Folder Info</summary>
+<summary>11. Space & Folder Info</summary>
 
 - **get_space**  
   Get information about the current Storyblok space.
@@ -329,14 +348,14 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>11. Utility</summary>
+<summary>12. Utility</summary>
 
 - **ping**  
   Check if the server and Storyblok API are reachable.
 </details>
 
 <details>
-<summary>12. AI Tools</summary>
+<summary>13. AI Tools</summary>
 
 * **generate_alt_text**  
   Automatically create alt text for images based on content or context.
