@@ -195,7 +195,26 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>3. Release Management</summary>
+<summary>3. Webhook Management</summary>
+
+- **fetch_webhooks**  
+  List all webhooks registered in the space.
+
+- **get_webhook**  
+  Fetch a single webhook by its ID.
+
+- **create_webhook**  
+  Create a new webhook that will trigger on specified Storyblok events.
+
+- **update_webhook**  
+  Update an existing webhook's endpoint, events, or other properties.
+
+- **delete_webhook**  
+  Delete a webhook by its ID.
+</details>
+
+<details>
+<summary>4. Release Management</summary>
 
 - **fetch_releases**  
   List all releases (content batches for scheduled publishing).
@@ -214,7 +233,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>4. Presets Management</summary>
+<summary>5. Presets Management</summary>
 
 - **fetch_presets**  
   List all component presets in the space. Supports pagination.
@@ -233,7 +252,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>5. Story Scheduling</summary>
+<summary>6. Story Scheduling</summary>
 
 - **fetch_story_schedulings**  
   Retrieve a list of story scheduling objects (scheduled publishings) for stories. Supports filtering, pagination, and search.
@@ -252,7 +271,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>6. Access Management</summary>
+<summary>7. Access Management</summary>
 
 - **fetch_access_tokens**  
   Retrieve all access tokens (API keys) for the current space.
@@ -271,7 +290,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>7. Asset Management</summary>
+<summary>8. Asset Management</summary>
 
 - **fetch_assets**  
   List all assets (images, files, etc.) in the space.
@@ -290,7 +309,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>8. Asset Folder Management</summary>
+<summary>9. Asset Folder Management</summary>
 
 - **fetch_asset_folders**  
   List all asset folders.
@@ -306,7 +325,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>9. Component Management</summary>
+<summary>10. Component Management</summary>
 
 - **fetch_components**  
   List all components (content types) in the space.
@@ -325,7 +344,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>10. Advanced Story Search</summary>
+<summary>11. Advanced Story Search</summary>
 
 - **search_stories**  
   Search for stories using advanced filters (by slug, tag, etc.).
@@ -335,7 +354,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>11. Space & Folder Info</summary>
+<summary>12. Space & Folder Info</summary>
 
 - **get_space**  
   Get information about the current Storyblok space.
@@ -348,14 +367,14 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>12. Utility</summary>
+<summary>13. Utility</summary>
 
 - **ping**  
   Check if the server and Storyblok API are reachable.
 </details>
 
 <details>
-<summary>13. AI Tools</summary>
+<summary>14. AI Tools</summary>
 
 * **generate_alt_text**  
   Automatically create alt text for images based on content or context.

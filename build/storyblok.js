@@ -774,4 +774,62 @@ export function storyblok(server) {
             return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
         }
     });
+    server.tool('fetch_webhooks', {}, async () => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, 'webhook_endpoints'), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('get_webhook', { id: z.string() }, async ({ id }) => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `webhook_endpoints/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('create_webhook', {
+        name: z.string(),
+        endpoint: z.string(),
+        actions: z.array(z.string()),
+        secret: z.string().optional(),
+        activated: z.boolean().optional()
+    }, async (params) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, 'webhook_endpoints'), { webhook_endpoint: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('update_webhook', {
+        id: z.string(),
+        name: z.string().optional(),
+        endpoint: z.string().optional(),
+        actions: z.array(z.string()).optional(),
+        secret: z.string().optional(),
+        activated: z.boolean().optional()
+    }, async ({ id, ...params }) => {
+        try {
+            const res = await axios.put(buildURL(MANAGEMENT_BASE, `webhook_endpoints/${id}`), { webhook_endpoint: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('delete_webhook', { id: z.string() }, async ({ id }) => {
+        try {
+            await axios.delete(buildURL(MANAGEMENT_BASE, `webhook_endpoints/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: `Webhook ${id} has been successfully deleted.` }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
 }
