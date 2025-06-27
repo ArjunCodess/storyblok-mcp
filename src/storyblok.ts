@@ -515,4 +515,73 @@ export function storyblok(server: McpServer) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
     }
   });
+
+  server.tool('fetch_access_tokens', {}, async () => {
+    try {
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, 'api_keys'), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('get_access_token', { id: z.string() }, async ({ id }) => {
+    try {
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, `api_keys/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('create_access_token', {
+    access: z.enum(['public', 'private']),
+    name: z.string().optional(),
+    min_cache: z.number().optional(),
+    story_ids: z.array(z.number()).optional(),
+    branch_id: z.number().optional()
+  }, async (params) => {
+    try {
+      const api_key: any = { access: params.access };
+      if (params.name !== undefined) api_key.name = params.name;
+      if (params.min_cache !== undefined) api_key.min_cache = params.min_cache;
+      if (params.story_ids !== undefined) api_key.story_ids = params.story_ids;
+      if (params.branch_id !== undefined) api_key.branch_id = params.branch_id;
+      const res = await axios.post(buildURL(MANAGEMENT_BASE, 'api_keys'), { api_key }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('update_access_token', {
+    id: z.string(),
+    access: z.enum(['public', 'private']).optional(),
+    name: z.string().optional(),
+    min_cache: z.number().optional(),
+    story_ids: z.array(z.number()).optional(),
+    branch_id: z.number().optional()
+  }, async ({ id, ...params }) => {
+    try {
+      const api_key: any = {};
+      if (params.access !== undefined) api_key.access = params.access;
+      if (params.name !== undefined) api_key.name = params.name;
+      if (params.min_cache !== undefined) api_key.min_cache = params.min_cache;
+      if (params.story_ids !== undefined) api_key.story_ids = params.story_ids;
+      if (params.branch_id !== undefined) api_key.branch_id = params.branch_id;
+      const res = await axios.put(buildURL(MANAGEMENT_BASE, `api_keys/${id}`), { api_key }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('delete_access_token', { id: z.string() }, async ({ id }) => {
+    try {
+      await axios.delete(buildURL(MANAGEMENT_BASE, `api_keys/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: `Access token ${id} has been successfully deleted.` }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
 }

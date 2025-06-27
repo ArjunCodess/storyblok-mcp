@@ -211,7 +211,26 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>4. Asset Management</summary>
+<summary>4. Access Management</summary>
+
+- **fetch_access_tokens**  
+  Retrieve all access tokens (API keys) for the current space.
+
+- **get_access_token**  
+  Fetch a single access token by its ID.
+
+- **create_access_token**  
+  Create a new access token (API key) for the space. Supports public/private, name, min_cache, story_ids, and branch_id.
+
+- **update_access_token**  
+  Update an existing access token's properties (type, name, min_cache, story_ids, branch_id).
+
+- **delete_access_token**  
+  Delete an access token by its ID.
+</details>
+
+<details>
+<summary>5. Asset Management</summary>
 
 - **fetch_assets**  
   List all assets (images, files, etc.) in the space.
@@ -230,7 +249,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>5. Asset Folder Management</summary>
+<summary>6. Asset Folder Management</summary>
 
 - **fetch_asset_folders**  
   List all asset folders.
@@ -246,7 +265,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>6. Component Management</summary>
+<summary>7. Component Management</summary>
 
 - **fetch_components**  
   List all components (content types) in the space.
@@ -265,7 +284,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>7. Advanced Story Search</summary>
+<summary>8. Advanced Story Search</summary>
 
 - **search_stories**  
   Search for stories using advanced filters (by slug, tag, etc.).
@@ -275,7 +294,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>8. Space & Folder Info</summary>
+<summary>9. Space & Folder Info</summary>
 
 - **get_space**  
   Get information about the current Storyblok space.
@@ -288,14 +307,14 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>9. Utility</summary>
+<summary>10. Utility</summary>
 
 - **ping**  
   Check if the server and Storyblok API are reachable.
 </details>
 
 <details>
-<summary>10. AI Tools</summary>
+<summary>11. AI Tools</summary>
 
 * **generate_alt_text**  
   Automatically create alt text for images based on content or context.
@@ -307,7 +326,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
   Generate SEO-friendly meta titles and descriptions for any story.
 
 * **summarize_story**  
-  Get a brief AI-generated summary of a story’s content.
+  Get a brief AI-generated summary of a story's content.
 
 * **tag_story_with_ai**  
   Auto-generate relevant tags for a story using natural language processing.
