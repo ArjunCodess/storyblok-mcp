@@ -173,6 +173,9 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 
 - **restore_story**  
   Restore a story to a previous version.
+
+- **import_story**  
+  Import a story, optionally specifying language code and whether to import language settings.
 </details>
 
 <details>

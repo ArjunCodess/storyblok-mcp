@@ -46,9 +46,24 @@ export function storyblok(server) {
         slug: z.string(),
         content: z.record(z.unknown()),
         parent_id: z.number().optional(),
+        group_id: z.string().optional(),
+        alternates: z.array(z.unknown()).optional(),
         is_folder: z.boolean().optional(),
         is_startpage: z.boolean().optional(),
-        tag_list: z.array(z.string()).optional()
+        tag_list: z.array(z.string()).optional(),
+        published: z.boolean().optional(),
+        sort_by_date: z.string().optional(),
+        default_root: z.string().optional(),
+        disble_fe_editor: z.boolean().optional(),
+        meta_data: z.unknown().optional(),
+        pinned: z.boolean().optional(),
+        position: z.number().optional(),
+        path: z.string().optional(),
+        publish_at: z.string().optional(),
+        expire_at: z.string().optional(),
+        is_scheduled: z.boolean().optional(),
+        scheduled_dates: z.string().optional(),
+        favourite_for_user_ids: z.array(z.number()).optional()
     }, async (params) => {
         try {
             const res = await axios.post(buildURL(MANAGEMENT_BASE, 'stories'), { story: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
@@ -63,7 +78,25 @@ export function storyblok(server) {
         name: z.string().optional(),
         slug: z.string().optional(),
         content: z.record(z.unknown()).optional(),
-        tag_list: z.array(z.string()).optional()
+        parent_id: z.number().optional(),
+        group_id: z.string().optional(),
+        alternates: z.array(z.unknown()).optional(),
+        is_folder: z.boolean().optional(),
+        is_startpage: z.boolean().optional(),
+        tag_list: z.array(z.string()).optional(),
+        published: z.boolean().optional(),
+        sort_by_date: z.string().optional(),
+        default_root: z.string().optional(),
+        disble_fe_editor: z.boolean().optional(),
+        meta_data: z.unknown().optional(),
+        pinned: z.boolean().optional(),
+        position: z.number().optional(),
+        path: z.string().optional(),
+        publish_at: z.string().optional(),
+        expire_at: z.string().optional(),
+        is_scheduled: z.boolean().optional(),
+        scheduled_dates: z.string().optional(),
+        favourite_for_user_ids: z.array(z.number()).optional()
     }, async ({ id, ...params }) => {
         try {
             const res = await axios.put(buildURL(MANAGEMENT_BASE, `stories/${id}`), { story: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
@@ -112,6 +145,26 @@ export function storyblok(server) {
     server.tool('restore_story', { id: z.string(), version_id: z.string() }, async ({ id, version_id }) => {
         try {
             const res = await axios.post(buildURL(MANAGEMENT_BASE, `stories/${id}/restore/${version_id}`), {}, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('import_story', {
+        id: z.string(),
+        story: z.record(z.unknown()),
+        lang_code: z.string().optional(),
+        import_lang: z.boolean().optional()
+    }, async ({ id, story, lang_code, import_lang }) => {
+        try {
+            const params = [];
+            if (lang_code)
+                params.push(`lang_code=${encodeURIComponent(lang_code)}`);
+            if (import_lang !== undefined)
+                params.push(`import_lang=${import_lang}`);
+            const query = params.length ? `?${params.join('&')}` : '';
+            const res = await axios.put(buildURL(MANAGEMENT_BASE, `stories/${id}/import${query}`), { story }, { headers: getHeaders(MANAGEMENT_TOKEN) });
             return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
         }
         catch (error) {
