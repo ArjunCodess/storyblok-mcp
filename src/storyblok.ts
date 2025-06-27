@@ -831,4 +831,64 @@ export function storyblok(server: McpServer) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
     }
   });
+
+  server.tool('fetch_component_folders', {}, async () => {
+    try {
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, 'component_groups'), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('get_component_folder', { id: z.string() }, async ({ id }) => {
+    try {
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, `component_groups/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('create_component_folder', {
+    name: z.string(),
+    parent_id: z.union([z.string(), z.number()]).optional()
+  }, async (params) => {
+    try {
+      const res = await axios.post(
+        buildURL(MANAGEMENT_BASE, 'component_groups'), 
+        { component_group: params }, 
+        { headers: getHeaders(MANAGEMENT_TOKEN) }
+      );
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('update_component_folder', {
+    id: z.string(),
+    name: z.string(),
+    parent_id: z.union([z.string(), z.number()]).optional()
+  }, async ({ id, ...params }) => {
+    try {
+      const res = await axios.put(
+        buildURL(MANAGEMENT_BASE, `component_groups/${id}`), 
+        { component_group: params }, 
+        { headers: getHeaders(MANAGEMENT_TOKEN) }
+      );
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('delete_component_folder', { id: z.string() }, async ({ id }) => {
+    try {
+      await axios.delete(buildURL(MANAGEMENT_BASE, `component_groups/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: `Component folder ${id} has been successfully deleted.` }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
 }

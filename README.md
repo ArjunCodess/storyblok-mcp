@@ -392,6 +392,25 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
   Auto-generate relevant tags for a story using natural language processing.
 </details>
 
+<details>
+<summary>15. Component Folders Management</summary>
+
+* **fetch_component_folders**  
+  List all component folders in the space.
+
+* **get_component_folder**  
+  Fetch a single component folder by its ID.
+
+* **create_component_folder**  
+  Create a new component folder with optional parent ID.
+
+* **update_component_folder**  
+  Update an existing component folder's name or parent ID.
+
+* **delete_component_folder**  
+  Delete a component folder by its ID.
+</details>
+
 ---
 
 ## How to Contribute
