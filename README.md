@@ -361,20 +361,51 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 
 - **fetch_folders**  
   List all story folders.
-
-- **fetch_datasources**  
-  List all datasources (for dynamic select fields, etc.).
 </details>
 
 <details>
-<summary>13. Utility</summary>
+<summary>13. Datasource Management</summary>
+
+- **fetch_datasources**  
+  List all datasources (for dynamic select fields, etc.).
+
+- **get_datasource**  
+  Get a single datasource by its ID.
+
+- **create_datasource**  
+  Create a new datasource with optional dimensions.
+
+- **update_datasource**  
+  Update an existing datasource (name, slug, dimensions).
+
+- **delete_datasource**  
+  Delete a datasource by its ID.
+
+- **fetch_datasource_entries**  
+  List all entries (key-value pairs) for a datasource.
+
+- **get_datasource_entry**  
+  Fetch a single datasource entry.
+
+- **create_datasource_entry**  
+  Create a new entry in a datasource with optional dimension values.
+
+- **update_datasource_entry**  
+  Update an existing datasource entry.
+
+- **delete_datasource_entry**  
+  Delete a datasource entry by its ID.
+</details>
+
+<details>
+<summary>14. Utility</summary>
 
 - **ping**  
   Check if the server and Storyblok API are reachable.
 </details>
 
 <details>
-<summary>14. AI Tools</summary>
+<summary>15. AI Tools</summary>
 
 * **generate_alt_text**  
   Automatically create alt text for images based on content or context.
@@ -393,7 +424,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>15. Component Folders Management</summary>
+<summary>16. Component Folders Management</summary>
 
 * **fetch_component_folders**  
   List all component folders in the space.

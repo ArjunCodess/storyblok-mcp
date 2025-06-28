@@ -469,6 +469,128 @@ export function storyblok(server: McpServer) {
     }
   });
 
+  server.tool('get_datasource', { id: z.string() }, async ({ id }) => {
+    try {
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, `datasources/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('create_datasource', { 
+    name: z.string(),
+    slug: z.string(),
+    dimensions_attributes: z.array(
+      z.object({
+        name: z.string(),
+        entry_value: z.string()
+      })
+    ).optional()
+  }, async (params) => {
+    try {
+      const res = await axios.post(buildURL(MANAGEMENT_BASE, 'datasources'), { datasource: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('update_datasource', { 
+    id: z.string(),
+    name: z.string().optional(),
+    slug: z.string().optional(),
+    dimensions_attributes: z.array(
+      z.object({
+        name: z.string(),
+        entry_value: z.string()
+      })
+    ).optional()
+  }, async ({ id, ...params }) => {
+    try {
+      const res = await axios.put(buildURL(MANAGEMENT_BASE, `datasources/${id}`), { datasource: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('delete_datasource', { id: z.string() }, async ({ id }) => {
+    try {
+      await axios.delete(buildURL(MANAGEMENT_BASE, `datasources/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: `Datasource ${id} has been successfully deleted.` }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('fetch_datasource_entries', { 
+    datasource_id: z.string(),
+    page: z.number().optional(),
+    per_page: z.number().optional()
+  }, async ({ datasource_id, page = 1, per_page = 25 }) => {
+    try {
+      const q = toQuery({ page, per_page });
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, `datasources/${datasource_id}/entries${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('get_datasource_entry', { 
+    datasource_id: z.string(),
+    entry_id: z.string()
+  }, async ({ datasource_id, entry_id }) => {
+    try {
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, `datasources/${datasource_id}/entries/${entry_id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('create_datasource_entry', { 
+    datasource_id: z.string(),
+    name: z.string(),
+    value: z.string(),
+    dimension_values: z.record(z.string()).optional()
+  }, async ({ datasource_id, ...params }) => {
+    try {
+      const res = await axios.post(buildURL(MANAGEMENT_BASE, `datasources/${datasource_id}/entries`), { entry: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('update_datasource_entry', { 
+    datasource_id: z.string(),
+    entry_id: z.string(),
+    name: z.string().optional(),
+    value: z.string().optional(),
+    dimension_values: z.record(z.string()).optional()
+  }, async ({ datasource_id, entry_id, ...params }) => {
+    try {
+      const res = await axios.put(buildURL(MANAGEMENT_BASE, `datasources/${datasource_id}/entries/${entry_id}`), { entry: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('delete_datasource_entry', { 
+    datasource_id: z.string(),
+    entry_id: z.string()
+  }, async ({ datasource_id, entry_id }) => {
+    try {
+      await axios.delete(buildURL(MANAGEMENT_BASE, `datasources/${datasource_id}/entries/${entry_id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: `Datasource entry ${entry_id} has been successfully deleted.` }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
   server.tool('generate_alt', {
     asset_id: z.string()
   }, async ({ asset_id }) => {
