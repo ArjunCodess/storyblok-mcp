@@ -425,7 +425,26 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>17. Space Management</summary>
+<summary>17. Space Roles Management</summary>
+
+* **fetch_space_roles**  
+  List all space roles in your Storyblok space.
+
+* **get_space_role**  
+  Fetch a single space role by its ID.
+
+* **create_space_role**  
+  Create a new space role with custom permissions settings.
+
+* **update_space_role**  
+  Update an existing space role's permissions and settings.
+
+* **delete_space_role**  
+  Delete a space role by its ID.
+</details>
+
+<details>
+<summary>18. Space Management</summary>
 
 * **fetch_spaces**  
   List all spaces accessible to your account. Supports pagination.
@@ -450,7 +469,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>18. AI Tools</summary>
+<summary>19. AI Tools</summary>
 
 * **generate_alt_text**  
   Automatically create alt text for images based on content or context.

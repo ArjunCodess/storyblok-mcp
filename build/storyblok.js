@@ -1157,4 +1157,74 @@ export function storyblok(server) {
             return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
         }
     });
+    server.tool('fetch_space_roles', {}, async () => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, 'space_roles'), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('get_space_role', { id: z.string() }, async ({ id }) => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `space_roles/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('create_space_role', {
+        role: z.string(),
+        subtitle: z.string().optional(),
+        permissions: z.array(z.string()).optional(),
+        field_permissions: z.array(z.string()).optional(),
+        readonly_field_permissions: z.array(z.string()).optional(),
+        allowed_paths: z.array(z.number()).optional(),
+        datasource_ids: z.array(z.number()).optional(),
+        component_ids: z.array(z.number()).optional(),
+        branch_ids: z.array(z.number()).optional(),
+        allowed_languages: z.array(z.string()).optional(),
+        asset_folder_ids: z.array(z.number()).optional()
+    }, async (params) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, 'space_roles'), { space_role: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('update_space_role', {
+        id: z.string(),
+        role: z.string().optional(),
+        subtitle: z.string().optional(),
+        permissions: z.array(z.string()).optional(),
+        field_permissions: z.array(z.string()).optional(),
+        readonly_field_permissions: z.array(z.string()).optional(),
+        allowed_paths: z.array(z.number()).optional(),
+        datasource_ids: z.array(z.number()).optional(),
+        component_ids: z.array(z.number()).optional(),
+        branch_ids: z.array(z.number()).optional(),
+        allowed_languages: z.array(z.string()).optional(),
+        asset_folder_ids: z.array(z.number()).optional()
+    }, async ({ id, ...params }) => {
+        try {
+            const res = await axios.put(buildURL(MANAGEMENT_BASE, `space_roles/${id}`), { space_role: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('delete_space_role', { id: z.string() }, async ({ id }) => {
+        try {
+            await axios.delete(buildURL(MANAGEMENT_BASE, `space_roles/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: `Space role ${id} has been successfully deleted.` }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
 }
