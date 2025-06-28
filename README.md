@@ -380,6 +380,10 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 
 - **delete_datasource**  
   Delete a datasource by its ID.
+</details>
+
+<details>
+<summary>14. Datasource Entries Management</summary>
 
 - **fetch_datasource_entries**  
   List all entries (key-value pairs) for a datasource.
@@ -398,29 +402,10 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>14. Utility</summary>
+<summary>15. Utility</summary>
 
 - **ping**  
   Check if the server and Storyblok API are reachable.
-</details>
-
-<details>
-<summary>15. AI Tools</summary>
-
-* **generate_alt_text**  
-  Automatically create alt text for images based on content or context.
-
-* **translate_story**  
-  Translate the content of a story into different languages using AI.
-
-* **generate_meta_tags**  
-  Generate SEO-friendly meta titles and descriptions for any story.
-
-* **summarize_story**  
-  Get a brief AI-generated summary of a story's content.
-
-* **tag_story_with_ai**  
-  Auto-generate relevant tags for a story using natural language processing.
 </details>
 
 <details>
@@ -440,6 +425,25 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 
 * **delete_component_folder**  
   Delete a component folder by its ID.
+</details>
+
+<details>
+<summary>17. AI Tools</summary>
+
+* **generate_alt_text**  
+  Automatically create alt text for images based on content or context.
+
+* **translate_story**  
+  Translate the content of a story into different languages using AI.
+
+* **generate_meta_tags**  
+  Generate SEO-friendly meta titles and descriptions for any story.
+
+* **summarize_story**  
+  Get a brief AI-generated summary of a story's content.
+
+* **tag_story_with_ai**  
+  Auto-generate relevant tags for a story using natural language processing.
 </details>
 
 ---

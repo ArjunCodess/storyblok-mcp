@@ -539,11 +539,10 @@ export function storyblok(server: McpServer) {
   });
 
   server.tool('get_datasource_entry', { 
-    datasource_id: z.string(),
     entry_id: z.string()
-  }, async ({ datasource_id, entry_id }) => {
+  }, async ({ entry_id }) => {
     try {
-      const res = await axios.get(buildURL(MANAGEMENT_BASE, `datasources/${datasource_id}/entries/${entry_id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      const res = await axios.get(buildURL(MANAGEMENT_BASE, `datasource_entries/${entry_id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
       return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
     } catch (error: any) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
@@ -555,9 +554,11 @@ export function storyblok(server: McpServer) {
     name: z.string(),
     value: z.string(),
     dimension_values: z.record(z.string()).optional()
-  }, async ({ datasource_id, ...params }) => {
+  }, async ({ datasource_id, name, value, dimension_values }) => {
     try {
-      const res = await axios.post(buildURL(MANAGEMENT_BASE, `datasources/${datasource_id}/entries`), { entry: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      const entryData: any = { name, value, datasource_id };
+      if (dimension_values) entryData.dimension_values = dimension_values;
+      const res = await axios.post(buildURL(MANAGEMENT_BASE, 'datasource_entries'), { datasource_entry: entryData }, { headers: getHeaders(MANAGEMENT_TOKEN) });
       return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
     } catch (error: any) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
@@ -565,14 +566,22 @@ export function storyblok(server: McpServer) {
   });
 
   server.tool('update_datasource_entry', { 
-    datasource_id: z.string(),
     entry_id: z.string(),
     name: z.string().optional(),
     value: z.string().optional(),
-    dimension_values: z.record(z.string()).optional()
-  }, async ({ datasource_id, entry_id, ...params }) => {
+    dimension_value: z.string().optional(),
+    dimension_id: z.number().optional()
+  }, async ({ entry_id, name, value, dimension_value, dimension_id }) => {
     try {
-      const res = await axios.put(buildURL(MANAGEMENT_BASE, `datasources/${datasource_id}/entries/${entry_id}`), { entry: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      const entryData: any = {};
+      if (name !== undefined) entryData.name = name;
+      if (value !== undefined) entryData.value = value;
+      if (dimension_value !== undefined) entryData.dimension_value = dimension_value;
+      
+      const payload: any = { datasource_entry: entryData };
+      if (dimension_id !== undefined) payload.dimension_id = dimension_id;
+      
+      const res = await axios.put(buildURL(MANAGEMENT_BASE, `datasource_entries/${entry_id}`), payload, { headers: getHeaders(MANAGEMENT_TOKEN) });
       return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
     } catch (error: any) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
@@ -580,11 +589,10 @@ export function storyblok(server: McpServer) {
   });
 
   server.tool('delete_datasource_entry', { 
-    datasource_id: z.string(),
     entry_id: z.string()
-  }, async ({ datasource_id, entry_id }) => {
+  }, async ({ entry_id }) => {
     try {
-      await axios.delete(buildURL(MANAGEMENT_BASE, `datasources/${datasource_id}/entries/${entry_id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+      await axios.delete(buildURL(MANAGEMENT_BASE, `datasource_entries/${entry_id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
       return { content: [{ type: 'text', text: `Datasource entry ${entry_id} has been successfully deleted.` }] };
     } catch (error: any) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
