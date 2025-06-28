@@ -354,10 +354,7 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>12. Space & Folder Info</summary>
-
-- **get_space**  
-  Get information about the current Storyblok space.
+<summary>12. Folder Info</summary>
 
 - **fetch_folders**  
   List all story folders.
@@ -428,7 +425,32 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 </details>
 
 <details>
-<summary>17. AI Tools</summary>
+<summary>17. Space Management</summary>
+
+* **fetch_spaces**  
+  List all spaces accessible to your account. Supports pagination.
+
+* **get_space**  
+  Get information about the current Storyblok space.
+
+* **create_space**  
+  Create a new space with optional configuration for billing, environments, and custom options.
+
+* **update_space**  
+  Update an existing space's settings including name, domain, hooks, and configuration options.
+
+* **delete_space**  
+  Delete a space by its ID.
+
+* **duplicate_space**  
+  Create a copy of an existing space with options to duplicate content and components.
+
+* **backup_space**  
+  Trigger a backup for a space.
+</details>
+
+<details>
+<summary>18. AI Tools</summary>
 
 * **generate_alt_text**  
   Automatically create alt text for images based on content or context.

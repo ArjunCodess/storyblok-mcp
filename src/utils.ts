@@ -2,6 +2,7 @@ export const MANAGEMENT_BASE = `https://mapi.storyblok.com/v1/spaces/${process.e
 export const CDN_BASE = 'https://api.storyblok.com/v2/cdn';
 export const MANAGEMENT_TOKEN = process.env.STORYBLOK_MANAGEMENT_TOKEN || '';
 export const PUBLIC_TOKEN = process.env.STORYBLOK_DEFAULT_PUBLIC_TOKEN || '';
+export const SPACES_BASE = 'https://mapi.storyblok.com/v1/spaces';
 
 export function getHeaders(token: string) {
   return {

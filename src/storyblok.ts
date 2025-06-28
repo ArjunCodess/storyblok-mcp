@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import axios from "axios";
-import { CDN_BASE, MANAGEMENT_BASE, MANAGEMENT_TOKEN, PUBLIC_TOKEN, buildURL, getHeaders, toQuery } from "./utils.js";
+import { CDN_BASE, MANAGEMENT_BASE, MANAGEMENT_TOKEN, PUBLIC_TOKEN, SPACES_BASE, buildURL, getHeaders, toQuery } from "./utils.js";
 import { generateText, generateObject } from 'ai';
 import { google } from '@ai-sdk/google';
 
@@ -432,15 +432,6 @@ export function storyblok(server: McpServer) {
     try {
       const q = toQuery({ token: PUBLIC_TOKEN });
       const res = await axios.get(`${CDN_BASE}/stories/${slug}${q}`);
-      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
-    } catch (error: any) {
-      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
-    }
-  });
-
-  server.tool('get_space', {}, async () => {
-    try {
-      const res = await axios.get(MANAGEMENT_BASE, { headers: getHeaders(MANAGEMENT_TOKEN) });
       return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
     } catch (error: any) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
@@ -1017,6 +1008,165 @@ export function storyblok(server: McpServer) {
     try {
       await axios.delete(buildURL(MANAGEMENT_BASE, `component_groups/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
       return { content: [{ type: 'text', text: `Component folder ${id} has been successfully deleted.` }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('get_space', {}, async () => {
+    try {
+      const res = await axios.get(MANAGEMENT_BASE, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('fetch_spaces', {
+    page: z.number().optional(),
+    per_page: z.number().optional()
+  }, async ({ page = 1, per_page = 25 }) => {
+    try {
+      const q = toQuery({ page, per_page });
+      const res = await axios.get(`${SPACES_BASE}${q}`, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('create_space', {
+    name: z.string(),
+    domain: z.string().optional(),
+    owner_id: z.number().optional(),
+    story_published_hook: z.string().optional(),
+    environments: z.array(z.object({
+      name: z.string(),
+      location: z.string()
+    })).optional(),
+    billing_address: z.object({
+      tax_number: z.string().optional(),
+      order_number: z.string().optional(),
+      company: z.string().optional(),
+      email: z.string().optional(),
+      name: z.string().optional(),
+      address_city: z.string().optional(),
+      address_country: z.string().optional(),
+      address_iso_country: z.string().optional(),
+      address_line1: z.string().optional(),
+      address_zip: z.string().optional()
+    }).optional(),
+    options: z.object({
+      branch_deployed_hook: z.string().optional(),
+      s3_bucket: z.string().optional(),
+      aws_arn: z.string().optional(),
+      backup_frequency: z.string().optional(),
+      languages: z.array(z.object({
+        code: z.string(),
+        name: z.string()
+      })).optional(),
+    }).optional()
+  }, async (params) => {
+    try {
+      const res = await axios.post(SPACES_BASE, { space: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('update_space', {
+    space_id: z.string(),
+    name: z.string().optional(),
+    domain: z.string().optional(),
+    uniq_domain: z.string().optional(),
+    owner_id: z.number().optional(),
+    story_published_hook: z.string().optional(),
+    environments: z.array(z.object({
+      name: z.string(),
+      location: z.string()
+    })).optional(),
+    parent_id: z.number().optional(),
+    searchblok_id: z.number().optional(),
+    duplicatable: z.boolean().optional(),
+    billing_address: z.object({
+      tax_number: z.string().optional(),
+      order_number: z.string().optional(),
+      company: z.string().optional(),
+      email: z.string().optional(),
+      name: z.string().optional(),
+      address_city: z.string().optional(),
+      address_country: z.string().optional(),
+      address_iso_country: z.string().optional(),
+      address_line1: z.string().optional(),
+      address_zip: z.string().optional()
+    }).optional(),
+    routes: z.array(z.string()).optional(),
+    default_root: z.string().optional(),
+    has_pending_tasks: z.boolean().optional(),
+    ai_translation_disabled: z.boolean().optional(),
+    options: z.object({
+      branch_deployed_hook: z.string().optional(),
+      s3_bucket: z.string().optional(),
+      aws_arn: z.string().optional(),
+      backup_frequency: z.string().optional(),
+      languages: z.array(z.object({
+        code: z.string(),
+        name: z.string()
+      })).optional(),
+    }).optional()
+  }, async ({ space_id, ...params }) => {
+    try {
+      const res = await axios.put(buildURL(SPACES_BASE, space_id), { space: params }, 
+        { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('delete_space', {
+    space_id: z.string()
+  }, async ({ space_id }) => {
+    try {
+      await axios.delete(buildURL(SPACES_BASE, space_id), 
+        { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: `Space ${space_id} has been successfully deleted.` }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('duplicate_space', {
+    space_id: z.string(),
+    name: z.string(),
+    duplicate_content: z.boolean().optional(),
+    create_components: z.boolean().optional()
+  }, async ({ space_id, name, duplicate_content = true, create_components = true }) => {
+    try {
+      const res = await axios.post(buildURL(SPACES_BASE, `${space_id}/duplicate`), 
+        { 
+          duplicate: { 
+            name,
+            duplicate_content,
+            create_components
+          } 
+        }, 
+        { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+    } catch (error: any) {
+      return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+    }
+  });
+
+  server.tool('backup_space', {
+    space_id: z.string(),
+  }, async ({ space_id }) => {
+    try {
+      const res = await axios.post(buildURL(SPACES_BASE, `${space_id}/backup`), 
+        {}, 
+        { headers: getHeaders(MANAGEMENT_TOKEN) });
+      return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
     } catch (error: any) {
       return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
     }
