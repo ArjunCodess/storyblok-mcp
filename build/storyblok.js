@@ -1374,4 +1374,37 @@ export function storyblok(server) {
             return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
         }
     });
+    server.tool('fetch_workflow_stage_changes', {
+        with_story: z.string().optional()
+    }, async ({ with_story }) => {
+        try {
+            const q = with_story ? `?with_story=${with_story}` : '';
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `workflow_stage_changes${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('create_workflow_stage_change', {
+        workflow_stage_id: z.number(),
+        story_id: z.number()
+    }, async ({ workflow_stage_id, story_id }) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, 'workflow_stage_changes'), { workflow_stage_change: { workflow_stage_id, story_id } }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('get_workflow_stage_change', { id: z.string() }, async ({ id }) => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `workflow_stage_changes/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
 }

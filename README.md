@@ -528,6 +528,19 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
   Delete a workflow stage by its ID.
 </details>
 
+<details>
+<summary>22. Workflow Stage Changes Management</summary>
+
+- **fetch_workflow_stage_changes**  
+  List all workflow stage changes with option to filter by story ID.
+
+- **get_workflow_stage_change**  
+  Fetch a single workflow stage change by its ID.
+
+- **create_workflow_stage_change**  
+  Create a new workflow stage change by assigning a story to a specific workflow stage.
+</details>
+
 ---
 
 ## How to Contribute
