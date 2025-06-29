@@ -222,6 +222,9 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
 - **create_release**  
   Create a new release.
 
+- **update_release**  
+  Update an existing release's properties including name, release time and notification settings.
+
 - **add_story_to_release**  
   Add a story to a release.
 

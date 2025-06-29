@@ -220,11 +220,23 @@ export function storyblok(server) {
             return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
         }
     });
-    server.tool('create_release', { name: z.string(), publish_at: z.string().optional() }, async ({ name, publish_at }) => {
+    server.tool('create_release', {
+        name: z.string(),
+        publish_at: z.string().optional(),
+        branches_to_deploy: z.array(z.number()).optional(),
+        timezone: z.string().optional(),
+        users_to_notify_ids: z.array(z.number()).optional()
+    }, async ({ name, publish_at, branches_to_deploy, timezone, users_to_notify_ids }) => {
         try {
             const body = { name };
             if (publish_at)
-                body.publish_at = publish_at;
+                body.release_at = publish_at; // Changed to release_at as per API docs
+            if (branches_to_deploy)
+                body.branches_to_deploy = branches_to_deploy;
+            if (timezone)
+                body.timezone = timezone;
+            if (users_to_notify_ids)
+                body.users_to_notify_ids = users_to_notify_ids;
             const res = await axios.post(buildURL(MANAGEMENT_BASE, 'releases'), { release: body }, { headers: getHeaders(MANAGEMENT_TOKEN) });
             return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
         }
@@ -244,6 +256,39 @@ export function storyblok(server) {
     server.tool('publish_release', { release_id: z.string() }, async ({ release_id }) => {
         try {
             const res = await axios.post(buildURL(MANAGEMENT_BASE, `releases/${release_id}/publish`), {}, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('update_release', {
+        release_id: z.string(),
+        name: z.string().optional(),
+        release_at: z.string().optional(),
+        branches_to_deploy: z.array(z.number()).optional(),
+        timezone: z.string().optional(),
+        users_to_notify_ids: z.array(z.number()).optional(),
+        do_release: z.boolean().optional()
+    }, async ({ release_id, name, release_at, branches_to_deploy, timezone, users_to_notify_ids, do_release }) => {
+        try {
+            const releaseData = {};
+            if (name)
+                releaseData.name = name;
+            if (release_at)
+                releaseData.release_at = release_at;
+            if (branches_to_deploy)
+                releaseData.branches_to_deploy = branches_to_deploy;
+            if (timezone)
+                releaseData.timezone = timezone;
+            if (users_to_notify_ids)
+                releaseData.users_to_notify_ids = users_to_notify_ids;
+            const requestData = {
+                release: releaseData
+            };
+            if (do_release !== undefined)
+                requestData.do_release = do_release;
+            const res = await axios.put(buildURL(MANAGEMENT_BASE, `releases/${release_id}`), requestData, { headers: getHeaders(MANAGEMENT_TOKEN) });
             return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
         }
         catch (error) {
