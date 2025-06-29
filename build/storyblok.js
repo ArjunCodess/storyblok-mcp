@@ -1296,4 +1296,82 @@ export function storyblok(server) {
             return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
         }
     });
+    server.tool('fetch_workflow_stages', {}, async () => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, 'workflow_stages'), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('get_workflow_stage', { id: z.string() }, async ({ id }) => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `workflow_stages/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('create_workflow_stage', {
+        name: z.string(),
+        color: z.string().optional(),
+        position: z.number().optional(),
+        is_default: z.boolean().optional(),
+        allow_publish: z.boolean().optional(),
+        allow_all_users: z.boolean().optional(),
+        allow_all_stages: z.boolean().optional(),
+        allow_admin_publish: z.boolean().optional(),
+        allow_admin_change: z.boolean().optional(),
+        allow_editor_change: z.boolean().optional(),
+        user_ids: z.array(z.number()).optional(),
+        space_role_ids: z.array(z.number()).optional(),
+        workflow_stage_ids: z.array(z.number()).optional(),
+        after_publish_id: z.number().optional(),
+        workflow_id: z.number().optional()
+    }, async (params) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, 'workflow_stages'), { workflow_stage: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('update_workflow_stage', {
+        id: z.string(),
+        name: z.string().optional(),
+        color: z.string().optional(),
+        position: z.number().optional(),
+        is_default: z.boolean().optional(),
+        allow_publish: z.boolean().optional(),
+        allow_all_users: z.boolean().optional(),
+        allow_all_stages: z.boolean().optional(),
+        allow_admin_publish: z.boolean().optional(),
+        allow_admin_change: z.boolean().optional(),
+        allow_editor_change: z.boolean().optional(),
+        user_ids: z.array(z.number()).optional(),
+        space_role_ids: z.array(z.number()).optional(),
+        workflow_stage_ids: z.array(z.number()).optional(),
+        after_publish_id: z.number().optional(),
+        workflow_id: z.number().optional()
+    }, async ({ id, ...params }) => {
+        try {
+            const res = await axios.put(buildURL(MANAGEMENT_BASE, `workflow_stages/${id}`), { workflow_stage: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('delete_workflow_stage', { id: z.string() }, async ({ id }) => {
+        try {
+            await axios.delete(buildURL(MANAGEMENT_BASE, `workflow_stages/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: `Workflow stage ${id} has been successfully deleted.` }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
 }

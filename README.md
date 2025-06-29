@@ -509,6 +509,25 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
   Delete a workflow by its ID.
 </details>
 
+<details>
+<summary>21. Workflow Stage Management</summary>
+
+- **fetch_workflow_stages**  
+  List all workflow stages defined in the space.
+
+- **get_workflow_stage**  
+  Fetch a single workflow stage by its ID.
+
+- **create_workflow_stage**  
+  Create a new workflow stage with permissions and settings.
+
+- **update_workflow_stage**  
+  Update an existing workflow stage's permissions, name, color, or position.
+
+- **delete_workflow_stage**  
+  Delete a workflow stage by its ID.
+</details>
+
 ---
 
 ## How to Contribute
