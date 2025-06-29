@@ -575,6 +575,19 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
   Copy stories from one branch to another.
 </details>
 
+<details>
+<summary>24. Branch Deployments Management</summary>
+
+- **fetch_branch_deployments**  
+  List all branch deployments in the space. Supports pagination.
+
+- **create_branch_deployment**  
+  Create a new branch deployment with required branch ID and optional release UUIDs. Requires the Pipelines application to be installed.
+
+- **get_branch_deployment**  
+  Fetch a single branch deployment by its ID.
+</details>
+
 ---
 
 ## How to Contribute

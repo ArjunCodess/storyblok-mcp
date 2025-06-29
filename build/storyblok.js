@@ -1564,4 +1564,42 @@ export function storyblok(server) {
             return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
         }
     });
+    server.tool('fetch_branch_deployments', {
+        page: z.number().optional(),
+        per_page: z.number().optional()
+    }, async ({ page = 1, per_page = 25 }) => {
+        try {
+            const q = toQuery({ page, per_page });
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `deployments${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('create_branch_deployment', {
+        branch_id: z.number(),
+        release_uuids: z.array(z.string()).optional()
+    }, async ({ branch_id, release_uuids }) => {
+        try {
+            const payload = { branch_id };
+            if (release_uuids && release_uuids.length > 0) {
+                payload.release_uuids = release_uuids;
+            }
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, 'deployments'), payload, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('get_branch_deployment', { id: z.string() }, async ({ id }) => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `deployments/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
 }
