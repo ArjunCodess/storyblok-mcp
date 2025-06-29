@@ -487,6 +487,28 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
   Auto-generate relevant tags for a story using natural language processing.
 </details>
 
+<details>
+<summary>20. Workflow Management</summary>
+
+- **fetch_workflows**  
+  List all workflows in the space with optional pagination.
+
+- **get_workflow**  
+  Fetch a single workflow by its ID.
+
+- **create_workflow**  
+  Create a new workflow with name and associated content types.
+
+- **update_workflow**  
+  Update an existing workflow's name or content types.
+
+- **duplicate_workflow**  
+  Create a duplicate of an existing workflow with a new name and content types.
+
+- **delete_workflow**  
+  Delete a workflow by its ID.
+</details>
+
 ---
 
 ## How to Contribute

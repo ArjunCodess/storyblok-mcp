@@ -1227,4 +1227,73 @@ export function storyblok(server) {
             return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
         }
     });
+    server.tool('fetch_workflows', {
+        page: z.number().optional(),
+        per_page: z.number().optional()
+    }, async (params) => {
+        try {
+            const q = toQuery(params);
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `workflows${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('get_workflow', { id: z.string() }, async ({ id }) => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `workflows/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('create_workflow', {
+        name: z.string(),
+        content_types: z.array(z.string())
+    }, async (params) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, 'workflows'), { workflow: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('update_workflow', {
+        id: z.string(),
+        name: z.string().optional(),
+        content_types: z.array(z.string()).optional()
+    }, async ({ id, ...params }) => {
+        try {
+            const res = await axios.put(buildURL(MANAGEMENT_BASE, `workflows/${id}`), { workflow: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('duplicate_workflow', {
+        id: z.string(),
+        name: z.string(),
+        content_types: z.array(z.string())
+    }, async ({ id, ...params }) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, `workflows/${id}/duplicate`), { workflow: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('delete_workflow', { id: z.string() }, async ({ id }) => {
+        try {
+            await axios.delete(buildURL(MANAGEMENT_BASE, `workflows/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: `Workflow ${id} has been successfully deleted.` }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
 }
