@@ -1452,4 +1452,116 @@ export function storyblok(server) {
             return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
         }
     });
+    server.tool('fetch_branches', {
+        page: z.number().optional(),
+        per_page: z.number().optional()
+    }, async (params) => {
+        try {
+            const q = toQuery(params);
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `branches${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('get_branch', { id: z.string() }, async ({ id }) => {
+        try {
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `branches/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('create_branch', {
+        name: z.string(),
+        source_id: z.number().nullable().optional(),
+        url: z.string().optional(),
+        position: z.number().optional()
+    }, async (params) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, 'branches'), { branch: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('update_branch', {
+        id: z.string(),
+        name: z.string().optional(),
+        source_id: z.number().nullable().optional(),
+        url: z.string().optional(),
+        position: z.number().optional()
+    }, async ({ id, ...params }) => {
+        try {
+            const res = await axios.put(buildURL(MANAGEMENT_BASE, `branches/${id}`), { branch: params }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('delete_branch', { id: z.string() }, async ({ id }) => {
+        try {
+            await axios.delete(buildURL(MANAGEMENT_BASE, `branches/${id}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: `Branch ${id} has been successfully deleted.` }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('deploy_branch', { id: z.string() }, async ({ id }) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, `branches/${id}/deploy`), {}, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('get_branch_stories', {
+        id: z.string(),
+        page: z.number().optional(),
+        per_page: z.number().optional(),
+        sort_by: z.string().optional()
+    }, async ({ id, ...params }) => {
+        try {
+            const q = toQuery(params);
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `branches/${id}/stories${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('compare_branches', {
+        source_id: z.string(),
+        target_id: z.string(),
+        page: z.number().optional(),
+        per_page: z.number().optional()
+    }, async ({ source_id, target_id, ...params }) => {
+        try {
+            const q = toQuery({ ...params, source: source_id, target: target_id });
+            const res = await axios.get(buildURL(MANAGEMENT_BASE, `branches/compare${q}`), { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
+    server.tool('copy_stories_between_branches', {
+        source_branch_id: z.string(),
+        target_branch_id: z.string(),
+        story_ids: z.array(z.number())
+    }, async ({ source_branch_id, target_branch_id, story_ids }) => {
+        try {
+            const res = await axios.post(buildURL(MANAGEMENT_BASE, `branches/${target_branch_id}/stories/copy`), { source_branch_id, story_ids }, { headers: getHeaders(MANAGEMENT_TOKEN) });
+            return { content: [{ type: 'text', text: JSON.stringify(res.data, null, 2) }] };
+        }
+        catch (error) {
+            return { isError: true, content: [{ type: 'text', text: `Error: ${error.message}` }] };
+        }
+    });
 }

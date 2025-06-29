@@ -544,6 +544,37 @@ https://github.com/user-attachments/assets/98b77544-81c4-49b3-8dc2-14849e6ba7e5
   Create a new workflow stage change by assigning a story to a specific workflow stage.
 </details>
 
+<details>
+<summary>23. Pipelines (Branches) Management</summary>
+
+- **fetch_branches**  
+  List all pipeline branches in the space. Supports pagination.
+
+- **get_branch**  
+  Fetch a single branch by its ID.
+
+- **create_branch**  
+  Create a new branch with options for name, source branch, URL, and position.
+
+- **update_branch**  
+  Update an existing branch's properties like name, source, URL, or position.
+
+- **delete_branch**  
+  Delete a branch by its ID.
+
+- **deploy_branch**  
+  Manually trigger a deployment of a branch.
+
+- **get_branch_stories**  
+  List all stories within a specific branch. Supports filtering and pagination.
+
+- **compare_branches**  
+  Compare content between two branches to see differences.
+
+- **copy_stories_between_branches**  
+  Copy stories from one branch to another.
+</details>
+
 ---
 
 ## How to Contribute
